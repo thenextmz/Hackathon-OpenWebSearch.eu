@@ -18,7 +18,7 @@ export const ResultSection: FC<ResultSectionProps> = ({ results, queryParams }) 
   const indices = Object.keys(results.results).map((key) => Object.keys(results.results[key])[0]);
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 w-full">
       {/** Map Each Index With Results */}
       {indices.map((indexname: any, index) => {
         const items: Result[] = results.results[index][indexname];
