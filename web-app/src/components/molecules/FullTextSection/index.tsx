@@ -7,6 +7,8 @@ import { ChevronRightIcon } from '@chakra-ui/icons';
 import { Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Input, Spinner, useDisclosure } from '@chakra-ui/react';
 import { FC, RefObject, useRef, useState } from 'react';
 import { FocusableElement } from '@chakra-ui/utils';
+import { ChatOpenAI } from '@langchain/openai';
+import { ChatPromptTemplate } from '@langchain/core/prompts';
 
 interface FullTextSectionProps {
   item: Result;
@@ -23,9 +25,11 @@ export const FullTextSection: FC<FullTextSectionProps> = ({ item }) => {
   const getFullText = async () => {
     setLoading(true);
     setButtonPressed('fullText');
-    const data: FullText = await api.fullText(item.id);
-    console.log(data.fullText);
-    setFullText(data);
+    if (!fullText?.fullText) {
+      const data: FullText = await api.fullText(item.id);
+      console.log(data.fullText);
+      setFullText(data);
+    }
     setLoading(false);
     onOpen();
   };
@@ -33,9 +37,30 @@ export const FullTextSection: FC<FullTextSectionProps> = ({ item }) => {
   const getAISummary = async () => {
     setLoading(true);
     setButtonPressed('aiSummary');
-    const data: FullText = await api.fullText(item.id);
-    const aiSummary = 'TODO: Implement AI Summary of Full Text';
-    setFullText({ ...data, aiSummary: aiSummary });
+    if (!fullText?.aiSummary) {
+      const data: FullText = await api.fullText(item.id);
+
+      /**
+       * TODO: Get API key from environment variable
+       */
+      const chatModel = new ChatOpenAI({
+        model: 'gpt-3.5-turbo',
+        apiKey: '',
+      });
+
+      const prompt = ChatPromptTemplate.fromMessages([
+        ['system', 'Please summarize the following text from a website.'],
+        ['user', '{input}'],
+      ]);
+
+      const chain = prompt.pipe(chatModel);
+
+      const response = await chain.invoke({
+        input: data.fullText,
+      });
+
+      setFullText({ ...data, aiSummary: response.content.toString() });
+    }
     setLoading(false);
     onOpen();
   };

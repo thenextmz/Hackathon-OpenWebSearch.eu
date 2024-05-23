@@ -9,7 +9,6 @@ class ApiClient {
   }
 
   /**
-   * TODO: Implement and Test, change "any"
    * @param id
    * @param column
    * @returns
