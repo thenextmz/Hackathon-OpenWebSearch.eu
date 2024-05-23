@@ -1,3 +1,4 @@
+import { FullText } from '@/types/fullText';
 import { QueryParams, ApiResponse } from '@/types/queryParams';
 
 class ApiClient {
@@ -13,7 +14,7 @@ class ApiClient {
    * @param column
    * @returns
    */
-  async fullText(id: string, column?: number): Promise<any> {
+  async fullText(id: string, column?: number): Promise<FullText> {
     const queryParams = new URLSearchParams();
     if (id) queryParams.append('id', id);
     if (column) queryParams.append('column', column.toString());
@@ -56,6 +57,7 @@ class ApiClient {
     }
 
     const url = this.baseURL + `search?${queryParams.toString()}`;
+    console.log(url);
     const res = await fetch(url);
 
     if (!res.ok) {

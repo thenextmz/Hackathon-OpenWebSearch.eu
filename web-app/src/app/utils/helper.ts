@@ -1,3 +1,4 @@
+import { IndexEntry } from '@/types/indexEntry';
 import { Result } from '@/types/queryParams';
 
 export function getIndexName(result: Result) {
@@ -17,4 +18,14 @@ function pad(n: number) {
 
 export function getDescription(textSnippet: string) {
   return textSnippet.substring(0, 250);
+}
+
+export function getDisplayString(index: string, indices: { [key: string]: IndexEntry }) {
+  for (const key in indices) {
+    if (indices[key].apiString === index) {
+      return indices[key].displayString;
+    }
+  }
+  // Should not happen
+  throw new Error('Index not found in indices dictionary');
 }
