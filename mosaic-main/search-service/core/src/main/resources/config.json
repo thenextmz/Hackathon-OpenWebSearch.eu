@@ -1,0 +1,11 @@
+{
+    "baseUrl": "https://qnode.eu/ows/mosaic/service",
+    "openSearchTemplateUrl": "https://qnode.eu/ows/mosaic/service/searchxml?q={searchTerms}&amp;pw={startPage?}&amp;limit={count?}",
+    "plugins": {
+        "core": "eu.ows.mosaic.CoreMetadata",
+        "query": "eu.ows.mosaic.CustomQuery",
+        "analyzer": "eu.ows.mosaic.CustomAnalysis",
+        "geo": "eu.ows.mosaic.GeoMetadata",
+        "keywords": "eu.ows.mosaic.KeywordsMetadata"
+    }
+}

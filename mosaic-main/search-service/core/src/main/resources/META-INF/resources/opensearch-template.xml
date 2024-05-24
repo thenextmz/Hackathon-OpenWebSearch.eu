@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/" xmlns:moz="http://www.mozilla.org/2006/browser/search/">
+    <ShortName>MOSAIC</ShortName>
+    <Description>MOSAIC Search Service</Description>
+    <InputEncoding>UTF-8</InputEncoding>
+    <Url method="get" template="" type="application/atom+xml"/>
+</OpenSearchDescription>

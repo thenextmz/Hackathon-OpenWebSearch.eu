@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta name="description" content="Demonstration front-end to the Prototype Search Application">
+    <meta name="keywords" content="OpenWebSearch.eu, search applicaiton">
+    <meta name="author" content="Alexander Nussbaumer">
+
+    <title>MOSAIC</title>
+
+
+    <link rel="shortcut icon" href="ows-icon-black.png">
+    
+    <script src="jquery-3.6.0.min.js"></script>
+    <link href="bootstrap-4.6.1.min.css" rel="stylesheet">
+
+    <link href="style.css" rel="stylesheet">
+    <script src="script.js"></script>
+  </head>
+
+  <body>
+
+    <div class="menubar">
+      <span class="menubrand"><img height="20" src="ows-icon-white.png"> MOSAIC</span>
+    </div>
+
+        <div class="container-fluid mainbody">
+
+            <div id="searchcontrol" style="border: solid 1px #ccc; padding: 0.5em; background: #f8f8f8;">
+
+                <div class="form-inline mb-3">
+                    <label class="mr-2" for="searchterm"><b>Search term:</b></label>
+                    <input type="text" class="col-sm-6 form-control form-control-sm" id="searchterm">
+                    <button type="submit" onclick="doSearch()" class="btn btn-info btn-sm ml-1">Search</button>
+                    <button type="submit" onclick="indexInfo()" class="btn btn-warning btn-sm ml-4">Index Info</button>
+                </div>
+
+                <div class="row mb-3">
+
+                    <div class="col-2">
+                      <b>Geo Filter:</b>
+                    </div>
+                    <div class="col-2 form-inline">
+                        <label class="mr-2" for="searchterm">West:</label>
+                        <input type="text" class="col-sm-7 form-control form-control-sm" id="geobox-west">
+                    </div>
+                    <div class="col-2 form-inline">
+                        <label class="mr-2" for="searchterm">East:</label>
+                        <input type="text" class="col-sm-7 form-control form-control-sm" id="geobox-east">
+                    </div>
+                    <div class="col-3 form-inline">
+                        <label class="mr-2" for="searchterm">North:</label>
+                        <input type="text" class="col-sm-7 form-control form-control-sm" id="geobox-north">
+                    </div>
+                    <div class="col-3 form-inline">
+                        <label class="mr-2" for="searchterm">South:</label>
+                        <input type="text" class="col-sm-7 form-control form-control-sm" id="geobox-south">
+                    </div>
+                    
+               </div>
+
+
+                <div class="row">
+
+                    <div class="col-3">
+                        <span><b>Index:</b></span><br>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="option-index" value="default"
+                                    checked>default / all
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="option-index" value="demo-simplewiki">Demo
+                                SimpleWiki
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="option-index" value="demo-unis-graz">Demo Graz Universities
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="option-index" value="dlrprototype">
+                                DLR Prototype
+                            </label>
+                        </div>
+                     </div>
+
+                    <div class="col-2">
+                        <span><b>Language:</b></span><br>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="option-language" value="default"
+                                    checked>default / all
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="option-language" value="eng">English
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="option-language" value="deu">German
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="col-2">
+                        <span><b>Limit:</b></span><br>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="option-limit" value="default"
+                                    checked>default / 20
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="option-limit" value="10">10 items
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="option-limit" value="50">50 items
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="option-limit" value="1000000">1,000,000
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="col-3">
+                        <span><b>Keyword:</b></span><br>
+                        <div class="form-inline">
+                          <input type="text" class="form-control form-control-sm" id="keyword">
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div id="searchurl"></div>
+
+            </div>
+
+
+            <div id="searchresult"></div>
+
+
+
+        </div>
+
+        </div>
+
+    </body>
+
+</html>
