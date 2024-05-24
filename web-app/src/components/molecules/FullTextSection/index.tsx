@@ -22,6 +22,9 @@ export const FullTextSection: FC<FullTextSectionProps> = ({ item }) => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  // TODO: let user choose language for traslation
+  const language = 'English';
+
   const getFullText = async () => {
     setLoading(true);
     setButtonPressed('fullText');
@@ -65,6 +68,37 @@ export const FullTextSection: FC<FullTextSectionProps> = ({ item }) => {
     onOpen();
   };
 
+  const getAITranslation = async (language: string) => {
+    setLoading(true);
+    setButtonPressed('aiTranslation');
+    if (!fullText?.aiTranslation) {
+      const data: FullText = await api.fullText(item.id);
+
+      /**
+       * TODO: Get API key from environment variable
+       */
+      const chatModel = new ChatOpenAI({
+        model: 'gpt-3.5-turbo',
+        apiKey: '',
+      });
+
+      const prompt = ChatPromptTemplate.fromMessages([
+        ['system', `Please translate the text to ${language}.`],
+        ['user', '{input}'],
+      ]);
+
+      const chain = prompt.pipe(chatModel);
+
+      const response = await chain.invoke({
+        input: data.fullText,
+      });
+
+      setFullText({ ...data, aiTranslation: response.content.toString() });
+    }
+    setLoading(false);
+    onOpen();
+  };
+
   return (
     <div>
       <Button
@@ -91,6 +125,19 @@ export const FullTextSection: FC<FullTextSectionProps> = ({ item }) => {
         AI Summary of Full Text
       </Button>
 
+      <Button
+        className="ml-2 gap-2"
+        colorScheme="teal"
+        size="xs"
+        onClick={() => {
+          // TODO: let user choose language
+          getAITranslation(language);
+        }}
+      >
+        {loading && buttonPressed === 'aiTranslation' ? <Spinner size={'xs'} /> : <ChevronRightIcon />}
+        AI Translation of Full Text in {language}
+      </Button>
+
       {buttonPressed === 'fullText' && fullText?.fullText && (
         <Drawer isOpen={isOpen} placement="right" onClose={onClose} size={'lg'}>
           <DrawerOverlay />
@@ -112,6 +159,19 @@ export const FullTextSection: FC<FullTextSectionProps> = ({ item }) => {
             <DrawerHeader>AI Summary</DrawerHeader>
             <DrawerBody className="bg-themeDark">
               <p className="text-md text-white">{fullText.aiSummary}</p>
+            </DrawerBody>
+          </DrawerContent>
+        </Drawer>
+      )}
+
+      {buttonPressed === 'aiTranslation' && fullText?.aiTranslation && (
+        <Drawer isOpen={isOpen} placement="right" onClose={onClose} size={'lg'}>
+          <DrawerOverlay />
+          <DrawerContent>
+            <DrawerCloseButton />
+            <DrawerHeader>AI Translation</DrawerHeader>
+            <DrawerBody className="bg-themeDark">
+              <p className="text-md text-white">{fullText.aiTranslation}</p>
             </DrawerBody>
           </DrawerContent>
         </Drawer>
