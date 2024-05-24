@@ -51,6 +51,11 @@ public abstract class CoreUtils {
     public static final String RANKING_DESC = "desc";
     public static final int DEFAULT_RESULTS_LIMIT = 20;
 
+    public static enum SortBy {
+        LENGTH,
+        DATE
+    }
+
     public static final String DEFAULT_INDEX_DIR_PATH = 
         System.getProperty("user.dir").substring(0, 
             (System.getProperty("user.dir").contains("search-service") ? System.getProperty("user.dir").indexOf("search-service") : System.getProperty("user.dir").length()))
@@ -308,15 +313,37 @@ public abstract class CoreUtils {
     }
 
     /**
+     * Retrieves the sort criteria from string
+     * @param sortBy Parsed string which is checked
+     * @return Recognised sorting criteria. Default Length
+     */
+    public static SortBy getSortBy(String sortBy) {
+        if (sortBy.equalsIgnoreCase("length")) {
+            return SortBy.LENGTH;
+        } else if (sortBy.equalsIgnoreCase("date")) {
+            return SortBy.DATE;
+        } else {
+            return null;
+        }
+    }
+
+    /**
      * Re-ranks the results of a search by word count in the specified sort order.
      * @param results List of results from a search
      * @param ranking Type of sort order
      * @return Re-ranked results sorted by the specified sort order
      */
-    public static List<Map<String, String>> reRankResults(List<Map<String, String>> searchResults, String ranking) {
-        LOGGER.info("Re-ranking search results with key: {}", ranking);
+    public static List<Map<String, String>> reRankResults(List<Map<String, String>> searchResults, String ranking, String sortBy) {
+        LOGGER.info("Re-ranking search results with key: {} and sort: {}", ranking, sortBy);
 
-        if (ranking != null && (ranking.equalsIgnoreCase(RANKING_ASC) || ranking.equalsIgnoreCase(RANKING_DESC))) {
+        if (ranking == null || sortBy == null) {
+            return searchResults;
+        }
+
+        SortBy sortByEnum = getSortBy(sortBy);
+
+        // Option Standard Length
+        if ((ranking.equalsIgnoreCase(RANKING_ASC) || ranking.equalsIgnoreCase(RANKING_DESC)) && sortByEnum == SortBy.LENGTH) {
             searchResults.sort(new Comparator<Map<String, String>>() {
 
                 @Override
@@ -325,6 +352,21 @@ public abstract class CoreUtils {
                         return o2.get("plain_text").split("\\s+").length - o1.get("plain_text").split("\\s+").length;
                     }
                     return o1.get("plain_text").split("\\s+").length - o2.get("plain_text").split("\\s+").length;
+                }
+
+            });
+        }
+
+        // Option Date
+        if ((ranking.equalsIgnoreCase(RANKING_ASC) || ranking.equalsIgnoreCase(RANKING_DESC)) && sortByEnum == SortBy.DATE) {
+            searchResults.sort(new Comparator<Map<String, String>>() {
+
+                @Override
+                public int compare(Map<String, String> o1, Map<String, String> o2) {
+                    if (ranking.equalsIgnoreCase(RANKING_DESC)) {
+                        return o2.get("warc_date").compareTo(o1.get("warc_date"));
+                    }
+                    return o1.get("warc_date").compareTo(o2.get("warc_date"));
                 }
 
             });
