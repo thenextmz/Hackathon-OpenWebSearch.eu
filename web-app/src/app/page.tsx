@@ -28,8 +28,8 @@ export default function Home() {
   }, [queryParams]);
 
   return (
-    <main className="flex flex-col flex-1 bg-themeDark min-h-screen">
-      <div className="flex flex-col flex-1 p-24 px-60  gap-2 items-center">
+    <main className="flex flex-col flex-1 bg-themeDark items-center min-h-screen">
+      <div className="flex flex-col flex-1 py-24 gap-2 w-[70%] items-center">
         <QuerySection loading={loading} setLoading={setLoading} sendRequest={sendRequest} queryParams={queryParams} setQueryParams={setQueryParams} setQuery={setQuery} />
         {data && <ResultHeader query={query} />}
         {data && <ResultSection results={data} queryParams={queryParams} />}

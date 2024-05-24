@@ -17,7 +17,7 @@ export const LanguageSelection: FC<LanguageSelectionProps> = ({ queryParams, set
       <AccordionItem className="rounded-xl bg-white">
         <AccordionButton>
           <Box as="span" flex="1" textAlign="left">
-            <p className="font-bold">Langauge : {queryParams.language ? getDisplayString(queryParams.language, languageIndices) : languageIndices.default.displayString}</p>
+            <p className="font-bold text-sm">Langauge : {queryParams.language ? getDisplayString(queryParams.language, languageIndices) : languageIndices.default.displayString}</p>
           </Box>
           <AccordionIcon />
         </AccordionButton>
@@ -31,7 +31,7 @@ export const LanguageSelection: FC<LanguageSelectionProps> = ({ queryParams, set
           }}
         >
           <div className="flex flex-row items-center gap-2">
-            <p className={!queryParams.language ? 'font-bold' : ''}>{languageIndices.default.displayString}</p>
+            <p className={!queryParams.language ? 'font-bold text-sm' : 'text-sm'}>{languageIndices.default.displayString}</p>
             {!queryParams.language && <CheckIcon />}
           </div>
         </AccordionPanel>
@@ -42,7 +42,7 @@ export const LanguageSelection: FC<LanguageSelectionProps> = ({ queryParams, set
           }}
         >
           <div className="flex flex-row items-center gap-2">
-            <p className={queryParams.language == languageIndices.english.apiString ? 'font-bold' : ''}>{languageIndices.english.displayString}</p>
+            <p className={queryParams.language == languageIndices.english.apiString ? 'font-bold text-sm' : 'text-sm'}>{languageIndices.english.displayString}</p>
             {queryParams.language == languageIndices.english.apiString && <CheckIcon />}
           </div>
         </AccordionPanel>
@@ -53,7 +53,7 @@ export const LanguageSelection: FC<LanguageSelectionProps> = ({ queryParams, set
           }}
         >
           <div className="flex flex-row items-center gap-2">
-            <p className={queryParams.language == languageIndices.german.apiString ? 'font-bold' : ''}>{languageIndices.german.displayString}</p>
+            <p className={queryParams.language == languageIndices.german.apiString ? 'font-bold text-sm' : 'text-sm'}>{languageIndices.german.displayString}</p>
             {queryParams.language == languageIndices.german.apiString && <CheckIcon />}
           </div>
         </AccordionPanel>

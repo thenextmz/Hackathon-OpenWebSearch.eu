@@ -19,7 +19,7 @@ export const LimitSelection: FC<LimitSelectionProps> = ({ queryParams, setQueryP
       <AccordionItem className="rounded-xl bg-white">
         <AccordionButton>
           <Box as="span" flex="1" textAlign="left">
-            <p className="font-bold">Limit: {queryParams.limit ? limitState : defaulString}</p>
+            <p className="font-bold text-sm">Limit: {queryParams.limit ? limitState : defaulString}</p>
           </Box>
           <AccordionIcon />
         </AccordionButton>
@@ -34,7 +34,7 @@ export const LimitSelection: FC<LimitSelectionProps> = ({ queryParams, setQueryP
           }}
         >
           <div className="flex flex-row items-center gap-2">
-            <p className={!queryParams.limit ? 'font-bold' : ''}>{defaulString}</p>
+            <p className={!queryParams.limit ? 'font-bold text-sm' : 'text-sm'}>{defaulString}</p>
             {!queryParams.limit && <CheckIcon />}
           </div>
         </AccordionPanel>
@@ -49,7 +49,7 @@ export const LimitSelection: FC<LimitSelectionProps> = ({ queryParams, setQueryP
               }}
             >
               <div className="flex flex-row items-center gap-2">
-                <p className={queryParams.limit == limit ? 'font-bold' : ''}>{limit}</p>
+                <p className={queryParams.limit == limit ? 'font-bold text-sm' : 'text-sm'}>{limit}</p>
                 {queryParams.limit == limit && <CheckIcon />}
               </div>
             </AccordionPanel>

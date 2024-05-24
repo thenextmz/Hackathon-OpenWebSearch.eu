@@ -17,7 +17,7 @@ export const IndexSelection: FC<IndexSelectionProps> = ({ queryParams, setQueryP
       <AccordionItem className="rounded-xl bg-white ">
         <AccordionButton>
           <Box as="span" flex="1" textAlign="left">
-            <p className="font-bold">Index : {queryParams.index ? getDisplayString(queryParams.index, indexIndices) : indexIndices.default.displayString}</p>
+            <p className="font-bold text-sm">Index : {queryParams.index ? getDisplayString(queryParams.index, indexIndices) : indexIndices.default.displayString}</p>
           </Box>
           <AccordionIcon />
         </AccordionButton>
@@ -31,7 +31,7 @@ export const IndexSelection: FC<IndexSelectionProps> = ({ queryParams, setQueryP
           }}
         >
           <div className="flex flex-row items-center gap-2">
-            <p className={!queryParams.index ? 'font-bold' : ''}>{indexIndices.default.displayString}</p>
+            <p className={!queryParams.index ? 'font-bold text-sm' : 'text-sm'}>{indexIndices.default.displayString}</p>
             {!queryParams.index && <CheckIcon />}
           </div>
         </AccordionPanel>
@@ -42,7 +42,7 @@ export const IndexSelection: FC<IndexSelectionProps> = ({ queryParams, setQueryP
           }}
         >
           <div className="flex flex-row items-center gap-2">
-            <p className={queryParams.index == indexIndices.demoSimpleWiki.apiString ? 'font-bold' : ''}>{indexIndices.demoSimpleWiki.displayString}</p>
+            <p className={queryParams.index == indexIndices.demoSimpleWiki.apiString ? 'font-bold text-sm' : 'text-sm'}>{indexIndices.demoSimpleWiki.displayString}</p>
             {queryParams.index == indexIndices.demoSimpleWiki.apiString && <CheckIcon />}
           </div>
         </AccordionPanel>
@@ -53,21 +53,10 @@ export const IndexSelection: FC<IndexSelectionProps> = ({ queryParams, setQueryP
           }}
         >
           <div className="flex flex-row items-center gap-2">
-            <p className={queryParams.index == indexIndices.demoUnisGraz.apiString ? 'font-bold' : ''}>{indexIndices.demoUnisGraz.displayString}</p>
+            <p className={queryParams.index == indexIndices.demoUnisGraz.apiString ? 'font-bold text-sm' : 'text-sm'}>{indexIndices.demoUnisGraz.displayString}</p>
             {queryParams.index == indexIndices.demoUnisGraz.apiString && <CheckIcon />}
           </div>
         </AccordionPanel>
-
-        {/*<AccordionPanel
-          onClick={() => {
-            setQueryParams({ ...queryParams, index: indices.dlrPrototype.apiString });
-          }}
-        >
-          <div className="flex flex-row items-center gap-2">
-            <p className={queryParams.index == indices.dlrPrototype.apiString ? 'font-bold' : ''}>{indices.dlrPrototype.displayString}</p>
-            {queryParams.index == indices.dlrPrototype.apiString && <CheckIcon className="" />}
-          </div>
-        </AccordionPanel>*/}
       </AccordionItem>
     </Accordion>
   );
