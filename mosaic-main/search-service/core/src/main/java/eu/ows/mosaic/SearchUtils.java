@@ -391,7 +391,8 @@ public class SearchUtils {
 
         // Optionally re-rank the search results
         String ranking = (String) queryParams.get("ranking");
-        List<Map<String, String>> reRankedResults = CoreUtils.reRankResults(results, ranking);
+        String sortBy = (String) queryParams.get("sortby");
+        List<Map<String, String>> reRankedResults = CoreUtils.reRankResults(results, ranking, sortBy);
 
         return reRankedResults;
     }

@@ -76,6 +76,9 @@ public class CoreMetadata extends MetadataModule {
         String rankingValue = (queryParams.containsKey("ranking")) ? queryParams.get("ranking") : null;
         parsedParams.put("ranking", rankingValue);
 
+        String sortValue = (queryParams.containsKey("sortby")) ? queryParams.get("sortby") : null;
+        parsedParams.put("sortby", sortValue);
+
         int limitValue = CoreUtils.convertLimit(queryParams.get("limit"));
         parsedParams.put("limit", limitValue);
 
