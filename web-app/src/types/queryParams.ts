@@ -1,4 +1,5 @@
-type SortOrder = 'desc' | 'asc';
+type SortOrder = 'desc' | 'asc' | undefined;
+export type SortBy = 'length' | 'date' | undefined;
 
 export type QueryParams = {
   query: string;
@@ -6,6 +7,7 @@ export type QueryParams = {
   language?: string;
   limit?: number;
   keyword?: string;
+  sortby?: SortBy;
   ranking?: SortOrder;
   pw?: number;
   fulltext?: boolean;

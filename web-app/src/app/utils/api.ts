@@ -48,6 +48,10 @@ class ApiClient {
     if (params.language) queryParams.append('lang', params.language);
     if (params.limit) queryParams.append('limit', params.limit.toString());
     if (params.keyword) queryParams.append('keyword', params.keyword);
+    if (params.ranking != undefined && params.sortby !== undefined) {
+      queryParams.append('ranking', params.ranking);
+      queryParams.append('sortby', params.sortby);
+    }
     if (params.west != undefined && params.east != undefined && params.south != undefined && params.north != undefined) {
       queryParams.append('west', params.west.toString());
       queryParams.append('east', params.east.toString());
