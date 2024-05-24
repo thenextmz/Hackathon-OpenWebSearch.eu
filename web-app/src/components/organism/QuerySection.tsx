@@ -36,23 +36,27 @@ export const QuerySection: FC<QuerySectionProps> = ({ loading, setLoading, sendR
       </div>
 
       <div className="rounded-xl flex flex-row flex-wrap gap-2 mt-2 w-full items-center bg-white justify-center">
-        <Button
-          className="m-1"
-          size={'xs'}
-          onClick={() => {
-            setQueryParams({ ...queryParams, ranking: queryParams.ranking == 'asc' ? 'desc' : 'asc' });
-          }}
-        >
-          {queryParams.ranking == 'asc' ? <ArrowUpIcon className="bg-green-200 rounded-xs" /> : <ArrowDownIcon className="bg-green-200 rounded-xs" />}
-        </Button>
+        {queryParams.sortby && (
+          <Button
+            className="m-1"
+            size={'xs'}
+            onClick={() => {
+              const oldParams = queryParams;
+              setQueryParams({ ...oldParams, ranking: oldParams.ranking == 'asc' ? 'desc' : 'asc' });
+            }}
+          >
+            {queryParams.ranking == 'asc' ? <ArrowUpIcon className="bg-green-200 rounded-xs" /> : <ArrowDownIcon className="bg-green-200 rounded-xs" />}
+          </Button>
+        )}
 
         {/** TODO: FIX LOGIC */}
-        <CheckboxGroup colorScheme="green" value={queryParams.sortby !== undefined ? [queryParams.sortby] : undefined}>
+        <CheckboxGroup colorScheme="green" value={[queryParams.sortby!]}>
           <Stack spacing={[1, 5]} direction={['column', 'row']}>
             <Checkbox
               value="length"
               onChange={() => {
-                setQueryParams({ ...queryParams, sortby: queryParams.sortby == 'length' ? undefined : 'length' });
+                const oldParams = queryParams;
+                setQueryParams({ ...oldParams, sortby: oldParams.sortby == 'length' ? undefined : 'length' });
               }}
             >
               Length
@@ -60,7 +64,8 @@ export const QuerySection: FC<QuerySectionProps> = ({ loading, setLoading, sendR
             <Checkbox
               value="date"
               onChange={() => {
-                setQueryParams({ ...queryParams, sortby: queryParams.sortby == 'date' ? undefined : 'date' });
+                const oldParams = queryParams;
+                setQueryParams({ ...oldParams, sortby: oldParams.sortby == 'date' ? undefined : 'date' });
               }}
             >
               Date

@@ -13,7 +13,7 @@ export default function Home() {
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<ApiResponse | null>(null);
   const [query, setQuery] = useState<string>(''); // Query state for displaying the search query
-  const [queryParams, setQueryParams] = useState<QueryParams>({ query: '' }); // Query params for sending the request
+  const [queryParams, setQueryParams] = useState<QueryParams>({ query: '', ranking: 'asc' }); // Query params for sending the request
 
   const sendRequest = async () => {
     setData(null);
